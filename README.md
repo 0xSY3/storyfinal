@@ -1,4 +1,4 @@
-# Story IP Platform - Comprehensive Architecture Documentation
+# CreativeIP - Comprehensive Architecture Documentation
 
 ## 🎯 Overview
 
@@ -128,8 +128,6 @@ story/
 │   │   │   └── yakoaService.ts   # Yakoa API Service
 │   │   └── index.ts            # Express Server
 │   └── package.json
-└── ai/                         # AI Model Training
-    └── finetuning.ipynb        # Model Fine-tuning Notebook
 ```
 
 ## 🚀 Getting Started
@@ -149,8 +147,8 @@ story/
 
 ```bash
 # Clone the repository
-git clone <repository-url>
-cd story
+git clone https://github.com/0xSY3/storyfinal.git
+cd storyfinal
 
 # Install frontend dependencies
 cd frontend
@@ -218,28 +216,6 @@ The application will be available at `http://localhost:3000`
 
 The platform uses Tomo wallet's EVM kit for signing Story Protocol transactions. Based on Tomo team's guidance, we use viem and ethers.js APIs for custom transaction signing:
 
-```typescript
-// Example transaction signing with Tomo wallet
-import { useWalletClient } from 'wagmi'
-import { getContract } from 'viem'
-
-const { data: walletClient } = useWalletClient()
-
-// Sign custom Story Protocol transaction
-const signStoryTransaction = async (transactionData) => {
-  if (!walletClient) throw new Error('Wallet not connected')
-  
-  // Use viem for transaction signing
-  const result = await walletClient.sendTransaction({
-    to: storyContractAddress,
-    data: transactionData,
-    value: 0n
-  })
-  
-  return result
-}
-```
-
 ## 💸 Cross-Chain Payment Flow
 
 ### deBridge Integration
@@ -249,8 +225,7 @@ The platform supports cross-chain payments for IP licensing using deBridge's DLN
 > **Current Status**: Enhanced simulation mode with testnet support. Real API integration available when SDK methods are verified.
 
 #### Supported Networks
-- **Mainnets**: Ethereum, Polygon, BSC, Arbitrum, Optimism, Base
-- **Testnets**: Sepolia, Polygon Mumbai, Arbitrum Goerli
+- **Testnets**: Ethereum Sepolia, Polygon Mumbai, Arbitrum Goerli
 - **Story Protocol**: Story Aeneid Testnet
 
 #### Payment Tokens
@@ -383,59 +358,6 @@ npm run test
 npm run lint
 ```
 
-## 🚨 Troubleshooting
-
-### Common Issues
-
-#### Wallet Connection Problems
-- **"unknown account" error**: 
-  - **CRITICAL**: Use the correct RPC URL: `https://aeneid.storyrpc.io` (not ankr.com)
-  - Ensure wallet is connected to Story Aeneid Testnet (Chain ID: 1315)
-  - Add Story Aeneid Testnet manually if not available:
-    - **Network Name**: Story Aeneid Testnet
-    - **RPC URL**: https://aeneid.storyrpc.io
-    - **Chain ID**: 1315
-    - **Symbol**: IP
-    - **Explorer**: https://aeneid.storyscan.io
-  - Refresh the page after adding/switching networks
-  - Check wallet has IP tokens for gas fees
-  - Run `debugWalletConnection()` in browser console for detailed diagnosis
-- **Network issues**: Verify network is set to Story Aeneid Testnet with correct RPC
-- **Gas problems**: Ensure wallet has sufficient IP balance for transactions
-
-#### Story Protocol Registration Failures
-- Confirm wallet is connected to Story testnet
-- Check if asset metadata is properly formatted
-- Verify Story Protocol contract address
-
-#### Cross-Chain Payment Issues
-- Ensure source chain has sufficient tokens
-- Check deBridge service status
-- Verify token approval for spending
-
-#### Verification Failures
-- Check Yakoa API credentials
-- Ensure asset format is supported
-- Verify API rate limits not exceeded
-
-### Debug Mode
-
-Enable debug logging by setting:
-```env
-NEXT_PUBLIC_DEBUG=true
-NODE_ENV=development
-```
-
-#### Story Protocol + Tomo Wallet Debug
-
-To debug wallet connection issues, run in browser console:
-```javascript
-// Check wallet connection status
-debugWalletConnection()
-
-// View Story Protocol network information
-console.log(storyNetworkInfo)
-```
 
 ### Support
 
