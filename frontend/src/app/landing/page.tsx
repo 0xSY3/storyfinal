@@ -1,0 +1,729 @@
+"use client"
+
+import React, { useEffect, useState } from "react"
+import { useRouter } from "next/navigation"
+import Image from "next/image"
+import TechStackScroll from "@/components/TechStackScroll"
+import { motion } from "framer-motion"
+import { 
+  ArrowRight,
+  Github,
+  Twitter,
+  Linkedin,
+  Brain,
+  Palette,
+  Shield,
+  Code,
+  Sparkles,
+  CheckCircle,
+  Play,
+  Target,
+  Coins,
+  MousePointer,
+  Wallet,
+  Rocket
+} from "lucide-react"
+import { Button } from "@/components/ui/button"
+import ModernNavbar from "@/components/navigation/modern-navbar"
+import { MorphingText } from "@/components/ui/morphing-text"
+import { useAccount } from 'wagmi'
+import { useConnectModal } from '@tomo-inc/tomo-evm-kit'
+
+export default function LandingPage() {
+  const router = useRouter()
+  const [mounted, setMounted] = useState(false)
+  const { openConnectModal } = useConnectModal()
+  
+  // Safe hook usage with mounted state for Tomo wallet
+  let address, isConnected;
+  try {
+    const accountData = useAccount();
+    address = accountData.address;
+    isConnected = accountData.isConnected;
+  } catch (error) {
+    address = undefined;
+    isConnected = false;
+  }
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
+  const handleConnectWallet = () => {
+    // Open Tomo wallet connection modal directly on landing page
+    openConnectModal?.()
+  }
+
+  const handleLaunchPlatform = () => {
+    // Only redirect to dashboard when user explicitly clicks launch
+    router.push('/dashboard')
+  }
+
+  const features = [
+    {
+      icon: Brain,
+      title: "Digital Asset Management",
+      description: "Upload, organize, and manage your digital content with comprehensive metadata and version control for creative professionals",
+      benefits: ["Multi-format support", "Version tracking", "Metadata management", "Organized galleries"],
+      gradient: "from-green-400 to-green-600",
+      shadowColor: "shadow-green-500/20"
+    },
+    {
+      icon: Shield,
+      title: "Blockchain IP Protection",
+      description: "Secure your creative assets with immutable blockchain technology and smart contracts for permanent ownership verification",
+      benefits: ["Immutable ownership", "Smart contract licensing", "Global protection", "Legal compliance"],
+      gradient: "from-green-500 to-green-700",
+      shadowColor: "shadow-green-500/20"
+    },
+    {
+      icon: Coins,
+      title: "Monetization Platform",
+      description: "Turn your creativity into revenue with our comprehensive marketplace and automated licensing system for sustainable income",
+      benefits: ["Multiple revenue streams", "Automated licensing", "Global marketplace", "Analytics dashboard"],
+      gradient: "from-yellow-400 via-amber-500 to-orange-600",
+      shadowColor: "shadow-amber-500/20"
+    }
+  ]
+
+  const useCases = [
+    {
+      title: "Digital Artists",
+      description: "Create and protect your digital artwork while building a sustainable income through our advanced creator tools",
+      icon: Palette,
+      color: "from-green-400 to-green-600",
+      bgPattern: "bg-green-50/50"
+    },
+    {
+      title: "Content Creators",
+      description: "Generate unlimited content variations while maintaining your unique brand identity across all platforms",
+      icon: Sparkles,
+      color: "from-green-500 to-green-700",
+      bgPattern: "bg-green-100/50"
+    },
+    {
+      title: "Businesses",
+      description: "Scale your creative operations with AI-powered content generation and comprehensive IP management solutions",
+      icon: Target,
+      color: "from-green-600 to-green-800",
+      bgPattern: "bg-green-200/50"
+    },
+    {
+      title: "Developers",
+      description: "Build on our platform with comprehensive APIs, SDKs, and development tools for seamless integration",
+      icon: Code,
+      color: "from-amber-400 via-yellow-500 to-orange-500",
+      bgPattern: "bg-gradient-to-br from-amber-50/50 to-orange-50/50"
+    }
+  ]
+
+
+  if (!mounted) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-emerald-50/30 flex items-center justify-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-600"></div>
+      </div>
+    )
+  }
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-emerald-50/30 overflow-x-hidden">
+      {/* Animated Background Elements */}
+      <div className="fixed inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-green-200/20 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-green-300/20 rounded-full blur-3xl animate-pulse delay-1000"></div>
+        <div className="absolute top-1/2 right-1/3 w-64 h-64 bg-green-400/20 rounded-full blur-3xl animate-pulse delay-2000"></div>
+      </div>
+
+      {/* Modern Navbar */}
+      <ModernNavbar />
+
+      {/* Hero Section */}
+      <section className="pt-8 pb-12 px-6 relative">
+        <div className="max-w-7xl mx-auto w-full">
+          <div className="text-center">
+            {/* Main Heading */}
+            <div className="mb-6">
+              <h1 className="text-5xl md:text-7xl lg:text-8xl font-black leading-tight max-w-6xl mx-auto mb-4">
+                <span className="text-slate-800">Cross-Chain</span><br/>
+                <div className="my-2">
+                  <MorphingText 
+                    texts={["IP Licensing", "Asset Trading", "Rights Hub", "Revenue Flow", "Content Shield", "Digital Market"]} 
+                    className="text-green-600"
+                  />
+                </div>
+                <span className="text-slate-800">Platform</span>
+              </h1>
+              
+              <p className="text-lg md:text-xl text-slate-600 leading-relaxed max-w-5xl mx-auto font-medium">
+                The comprehensive platform for{" "}
+                <span className="text-green-600 font-semibold">digital content management</span>,{" "}
+                <span className="text-green-700 font-semibold">Story Protocol IP protection</span>, and{" "}
+                <span className="text-green-800 font-semibold">cross-chain licensing</span>. 
+                Upload, protect, and monetize your creative work.
+              </p>
+            </div>
+            
+            {/* CTA Buttons */}
+            <div className="mt-6">
+              {!isConnected ? (
+                <div className="flex flex-col sm:flex-row items-center justify-center gap-5">
+                  <Button 
+                    onClick={handleConnectWallet}
+                    size="lg"
+                    className="bg-green-600 hover:bg-green-700 text-white px-9 py-4 text-lg rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300"
+                  >
+                    <Wallet className="mr-2 w-5 h-5" />
+                    Connect Wallet to Start
+                    <ArrowRight className="ml-2 w-4 h-4" />
+                  </Button>
+                  <Button 
+                    variant="outline"
+                    size="lg"
+                    className="border-2 border-slate-300 text-slate-700 hover:bg-slate-50 hover:border-slate-400 px-9 py-4 text-lg rounded-xl font-semibold shadow-sm hover:shadow-md transition-all duration-300"
+                  >
+                    <Play className="mr-2 w-5 h-5" />
+                    Watch Demo
+                  </Button>
+                </div>
+              ) : (
+                <div className="flex flex-col items-center justify-center gap-7">
+                  <div className="bg-green-50 border border-green-200 px-7 py-4 rounded-full">
+                    <div className="flex items-center gap-2 text-green-700">
+                      <CheckCircle className="w-5 h-5" />
+                      <span className="font-semibold">Wallet Connected</span>
+                      <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                    </div>
+                  </div>
+                  <div className="flex flex-col sm:flex-row items-center justify-center gap-5">
+                    <Button 
+                      onClick={handleLaunchPlatform}
+                      size="lg"
+                      className="bg-green-600 hover:bg-green-700 text-white px-9 py-4 text-lg rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300"
+                    >
+                      <Rocket className="mr-2 w-5 h-5" />
+                      Launch Platform
+                      <ArrowRight className="ml-2 w-4 h-4" />
+                    </Button>
+                    <Button 
+                      variant="outline"
+                      size="lg"
+                      className="border-2 border-slate-300 text-slate-700 hover:bg-slate-50 hover:border-slate-400 px-9 py-4 text-lg rounded-xl font-semibold shadow-sm hover:shadow-md transition-all duration-300"
+                    >
+                      <Play className="mr-2 w-5 h-5" />
+                      Explore Features
+                    </Button>
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Tech Stack Preview */}
+      <TechStackScroll />
+
+      {/* Technology Stack Section */}
+      <section className="py-24 bg-gradient-to-br from-slate-50 via-white to-green-50/30 relative">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+          <motion.div
+            className="text-center space-y-4 mb-20"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true }}
+          >
+            <h2 className="text-5xl md:text-6xl font-black text-slate-800 mb-6">
+              Powered by{" "}
+              <span className="text-green-600">
+                Cutting-Edge
+              </span><br />
+              Web3 Technologies
+            </h2>
+            <p className="text-xl text-slate-600 max-w-4xl mx-auto leading-relaxed font-medium">
+              We've integrated the most advanced blockchain and AI technologies to create a seamless, 
+              secure, and scalable platform for the future of digital content creation.
+            </p>
+          </motion.div>
+          
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
+            {[
+              {
+                name: "Story Protocol",
+                description: "The IP infrastructure layer enabling programmable and composable IP licensing for digital content",
+                features: ["IP Registration", "Licensing Terms", "Revenue Sharing", "Dispute Resolution"],
+                color: "from-green-500 to-green-700",
+                bgColor: "bg-white",
+                textColor: "text-green-600",
+                logo: (
+                  <div className="w-16 h-16 bg-white rounded-2xl border-2 border-gray-200 flex items-center justify-center p-2">
+                    <svg className="w-full h-full text-black" viewBox="0 0 401 92" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M34.9,92C54,92,69.5,80.5,69.5,61.1C69.5,43,56,30.3,34.9,30.3v13.4c-9.7,0-16.9-4.3-16.9-13.1   c0-8.8,6.2-14,17.4-14c9.2,0,14.7,3.8,16.1,8.8h17C67.2,11.4,54,0,35,0C14.9,0,0.6,12.6,0.6,31c0,18.4,14.9,29.5,34.3,29.5V47.8   c10.3,0,17.4,4.6,17.4,13.7c0,9-7.2,14.1-17.3,14.1c-9.1,0-15.4-4-17.3-9.5H0C2.5,80.6,15.8,92,34.9,92z"/>
+                      <polygon points="101,90 120.3,90 120.3,19.5 147.9,19.5 147.9,2.1 73.4,2.1 73.4,19.5 101,19.5"/>
+                      <path d="M192.9,92v-9c20.3,0,35.5-15.9,35.5-37h9.4c0-25-19.4-46-44.9-46c-27.4,0-45.1,19.1-45.1,46   C147.8,71,167.4,92,192.9,92z M220.5,46h-8.6c0,11.4-8.4,19.8-19,19.8v8.6c-15.5,0-26.7-12.9-26.7-28.3c0-16.7,10-28,26.7-28   C208.4,18,220.5,29.9,220.5,46z"/>
+                      <path d="M297.8,32.5c0,9-4.9,13.4-14.2,13.4h-17.8V19.6H283C292.3,19.6,297.8,23.5,297.8,32.5z M246.8,90h19.1V63.3   h17.8c1.1,0,2.1-0.1,3.2-0.1L300.7,90h20.4L304,57.8c8.1-5.6,12.1-14.8,12.1-25.2c0-17-10.4-30.4-33.1-30.4h-36.2V90z"/>
+                      <path d="M354.8,90h18.4V52.9L401,2.2h-21.2l-25,46.9V90z M338.7,40.6h20.7L338.7,2.2h-20.7L338.7,40.6z"/>
+                    </svg>
+                  </div>
+                )
+              },
+              {
+                name: "DeBridge",
+                description: "Cross-chain infrastructure enabling seamless asset transfers and licensing across multiple blockchains",
+                features: ["Cross-Chain Bridge", "Multi-Chain Support", "Asset Portability", "Unified Liquidity"],
+                color: "from-blue-500 to-blue-700",
+                bgColor: "bg-white", 
+                textColor: "text-blue-600",
+                logo: (
+                  <div className="w-16 h-16 bg-black rounded-2xl border-2 border-blue-200 flex items-center justify-center p-2">
+                    <svg className="w-full h-full" viewBox="0 0 91 52" xmlns="http://www.w3.org/2000/svg">
+                      <path fillRule="evenodd" clipRule="evenodd" d="M78.5778 52H90.6667C90.6667 51.4943 90.6584 50.9906 90.642 50.4889H81.2109L90.5435 48.6325C90.4652 47.5662 90.35 46.5101 90.1992 45.4655L81.352 47.2253L89.9053 43.6824C89.6991 42.5702 89.4522 41.4723 89.1664 40.3902L80.7959 43.8573L88.6554 38.6058C88.301 37.4583 87.9023 36.3302 87.4612 35.2237L79.5077 40.538L86.6745 33.3713C86.1491 32.207 85.5759 31.0689 84.9574 29.9595L77.4914 37.4255L83.7947 27.992C83.0747 26.8409 82.3044 25.7245 81.487 24.6458L74.7814 34.6814L79.804 22.5558C78.8698 21.4631 77.8845 20.4154 76.8518 19.4163L71.7282 31.7858C76.0244 37.3871 78.5778 44.3954 78.5778 52ZM12.0889 52C12.0889 51.0843 12.1259 50.1772 12.1985 49.2802H0.0802429C0.0269992 50.18 0 51.0869 0 52H12.0889ZM12.9956 44.2561L1.13017 41.8959C1.52612 40.1565 2.0221 38.4551 2.61175 36.7981L14.6459 39.1919C13.9662 40.8184 13.4121 42.5106 12.9956 44.2561ZM16.952 34.6792L5.6808 30.0105C6.52799 28.4861 7.46054 27.0156 8.47199 25.6056L20.0575 30.4045C18.9139 31.7417 17.8745 33.1709 16.952 34.6792ZM23.4882 26.9398L13.1744 20.0483C14.3837 18.8312 15.6615 17.6824 17.0017 16.6082L27.743 23.7853C26.2401 24.7243 24.8176 25.78 23.4882 26.9398ZM31.7225 21.6605L22.7471 12.6851C24.214 11.8405 25.7326 11.0757 27.2971 10.3965L36.7696 19.869C35.0268 20.3323 33.3404 20.9336 31.7225 21.6605ZM40.6682 19.0803L33.4289 8.24589C35.0399 7.80862 36.6865 7.45795 38.3634 7.19918L46.0908 18.764C45.839 18.7584 45.5865 18.7556 45.3333 18.7556C43.75 18.7556 42.1925 18.8663 40.6682 19.0803ZM49.3577 18.9967L44.2557 6.67924C44.6139 6.67089 44.9731 6.66669 45.3333 6.66669C46.6445 6.66669 47.9426 6.72235 49.2256 6.83144L54.7214 20.0996C52.9881 19.5904 51.196 19.2185 49.3577 18.9967ZM57.0577 20.882L54.4109 7.57574C56.014 7.90155 57.5863 8.31195 59.123 8.80208L61.9917 23.224C60.4237 22.3144 58.7745 21.5292 57.0577 20.882ZM63.366 24.0665V10.395C64.8174 11.0249 66.2293 11.7285 67.5971 12.5012V27.3113C66.2783 26.1212 64.8636 25.0353 63.366 24.0665ZM68.2013 27.8701L70.8552 14.5281C72.1065 15.382 73.3129 16.297 74.47 17.2687L71.6122 31.6355C70.5718 30.2948 69.4311 29.0359 68.2013 27.8701Z" fill="#FBFF3A"/>
+                      <path fillRule="evenodd" clipRule="evenodd" d="M66.4889 51.9998H78.5777C78.5777 51.4211 78.563 50.846 78.5338 50.2746L72.5203 50.1696L78.4528 49.0969C78.3282 47.6571 78.1119 46.2436 77.8097 44.8623L70.9982 46.094L77.4908 43.5365C77.138 42.1921 76.7031 40.8811 76.1918 39.6089L68.7616 42.5357L75.5679 38.1578C75.0106 36.9425 74.3822 35.7667 73.6881 34.6356L65.9581 39.6076L72.6907 33.1061C71.959 32.0487 71.1677 31.0358 70.3215 30.0723L62.7417 37.392L68.8848 28.5366C68.0128 27.6613 67.0923 26.8344 66.1277 26.0601L59.2788 35.9327L64.197 24.6217C63.2219 23.9486 62.2091 23.3262 61.1624 22.7584L56.3124 33.9125C62.4138 37.6241 66.4889 44.336 66.4889 51.9998ZM24.1778 51.9998H12.0889C12.0889 51.438 12.1028 50.8794 12.1303 50.3245L24.2276 50.5357C24.1946 51.0194 24.1778 51.5076 24.1778 51.9998ZM58.7074 21.555C57.6705 21.0988 56.6059 20.6941 55.5168 20.344L52.9318 32.2498C54.0199 32.6687 55.0646 33.1749 56.0574 33.7599L58.7074 21.555ZM52.549 19.5406C51.4954 19.3074 50.423 19.1242 49.3344 18.9936L49.1216 31.1824C50.2235 31.3816 51.2957 31.6662 52.3311 32.0289L52.549 19.5406ZM45.3333 18.7553C44.4859 18.7553 43.6459 18.787 42.8144 18.8493L44.984 30.847C45.1002 30.8451 45.2166 30.8442 45.3333 30.8442C46.2846 30.8442 47.2212 30.907 48.1392 31.0286L45.9208 18.7604C45.7254 18.757 45.5295 18.7553 45.3333 18.7553ZM39.025 31.8007L32.3312 21.3941C31.4715 21.7598 30.6304 22.1606 29.8096 22.5948L36.3884 32.8227C37.238 32.4257 38.1184 32.0835 39.025 31.8007ZM34.5886 33.772L26.0421 24.9218C25.3263 25.4327 24.6316 25.9712 23.9596 26.5359L32.3892 35.265C33.0888 34.7231 33.8232 34.2242 34.5886 33.772ZM20.5668 29.8224C20.0159 30.4372 19.4875 31.0727 18.983 31.7275L28.9356 38.6319C29.4614 37.9877 30.0243 37.3751 30.6212 36.7974L20.5668 29.8224ZM16.242 35.8971C15.8674 36.5724 15.5157 37.2621 15.1878 37.9652L26.2825 42.7894C26.6221 42.0883 26.9992 41.4089 27.4113 40.7536L16.242 35.8971ZM13.3621 42.8564C13.1646 43.5481 12.989 44.2491 12.836 44.9585L24.6521 47.5241C24.8054 46.8122 24.9946 46.1137 25.2176 45.4304L13.3621 42.8564ZM43.6335 30.9115C42.6241 30.9917 41.6347 31.1428 40.6702 31.3598L36.2049 20.0242C37.1458 19.7561 38.1037 19.5284 39.0766 19.3432L43.6335 30.9115Z" fill="#FBFF3A"/>
+                      <path fillRule="evenodd" clipRule="evenodd" d="M64.8013 51.9995L66.4888 51.9406C66.4879 51.6029 66.4791 51.2672 66.4625 50.9334L56.2075 51.2916L56.0279 51.2623L66.2566 48.8538C66.1994 48.4695 66.1317 48.0885 66.0541 47.7113L56.3402 49.9986L65.5645 45.7948C65.4355 45.3739 65.2938 44.9585 65.1398 44.5492L56.5009 48.4861L64.392 42.8054C64.1775 42.3616 63.948 41.9265 63.7041 41.5007L56.2761 46.8481L62.7177 39.9403C62.4059 39.4917 62.0772 39.0558 61.7325 38.6334L55.6258 45.182L60.5207 37.2719C60.1028 36.841 59.6667 36.4279 59.2137 36.0337L54.5341 43.5959L57.7869 34.896C57.2586 34.5107 56.7118 34.1493 56.1481 33.8133L53.0125 42.2001L54.5209 32.9377C53.8854 32.6308 53.2321 32.3548 52.5631 32.1115L51.0986 41.1038L50.7649 31.5477C50.035 31.3543 49.2896 31.199 48.531 31.084L48.8566 40.4064L46.6139 30.8821C46.1903 30.8568 45.7633 30.8439 45.3333 30.8439C44.9464 30.8439 44.5619 30.8543 44.18 30.8748L46.3748 40.1954L42.2169 31.0719C41.3573 31.1988 40.5145 31.3774 39.6919 31.6044L43.7616 40.5347L37.7837 32.2308C36.9314 32.5565 36.1055 32.9357 35.3103 33.3643L41.143 41.4665L33.5754 34.4096C32.7816 34.9413 32.0258 35.5253 31.3129 36.1567L38.6523 43.0008L29.8674 37.5645C29.1861 38.2942 28.5558 39.0722 27.9822 39.8927L36.4297 45.1202L26.9249 41.5666C26.4111 42.4713 25.962 43.4176 25.584 44.3993L34.611 47.7743L24.9808 46.206C24.6853 47.2462 24.4674 48.319 24.3337 49.4178L33.3196 50.8812L24.1926 51.2C24.1827 51.4653 24.1777 51.7318 24.1777 51.9995H36.2666C36.2666 46.9921 40.3259 42.9328 45.3333 42.9328C50.3407 42.9328 54.4 46.9921 54.4 51.9995L64.8013 51.9995Z" fill="#FBFF3A"/>
+                    </svg>
+                  </div>
+                )
+              },
+              {
+                name: "Yakoa",
+                description: "Advanced content verification and authenticity engine ensuring genuine digital asset provenance",
+                features: ["Content Verification", "Authenticity Proof", "Anti-Plagiarism", "Quality Assurance"],
+                color: "from-purple-500 to-purple-700",
+                bgColor: "bg-white",
+                textColor: "text-purple-600", 
+                logo: (
+                  <div className="w-16 h-16 bg-gray-900 rounded-2xl border-2 border-purple-200 flex items-center justify-center p-2 shadow-lg">
+                    <Image
+                      src="/yakoa.webp"
+                      alt="Yakoa Logo"
+                      width={48}
+                      height={48}
+                      className="w-full h-full object-contain"
+                    />
+                  </div>
+                )
+              },
+              {
+                name: "Tomo Network",
+                description: "High-performance blockchain infrastructure providing fast, secure, and cost-effective transactions",
+                features: ["Fast Transactions", "Low Fees", "EVM Compatible", "Scalable Network"],
+                color: "from-pink-500 to-pink-700",
+                bgColor: "bg-white",
+                textColor: "text-pink-600",
+                logo: (
+                  <div className="w-16 h-16 bg-white rounded-2xl border-2 border-pink-200 flex items-center justify-center p-2 shadow-lg">
+                    <svg className="w-full h-full" viewBox="0 0 39 32" xmlns="http://www.w3.org/2000/svg">
+                      <path fillRule="evenodd" clipRule="evenodd" d="M18.6097 8.15324C19.0241 7.67736 19.7634 7.67735 20.1778 8.15324L21.6859 9.88508C21.9967 10.242 22.5093 10.344 22.9331 10.1332L24.9891 9.11027C25.5541 8.82919 26.2372 9.11213 26.4379 9.71037L27.1685 11.8875C27.319 12.3362 27.7536 12.6266 28.2258 12.594L30.5167 12.4358C31.1463 12.3923 31.6691 12.9151 31.6256 13.5446L31.4674 15.8356C31.4348 16.3077 31.7252 16.7423 32.1738 16.8929L34.351 17.6234C34.9492 17.8242 35.2321 18.5072 34.9511 19.0722L33.9282 21.1283C33.7174 21.552 33.8194 22.0646 34.1763 22.3754L35.9081 23.8835C36.384 24.2979 36.384 25.0373 35.9081 25.4517L34.2917 26.8593C33.8839 27.2144 33.8164 27.8227 34.1364 28.2586L35.1776 29.677C35.6818 30.3637 35.1914 31.3319 34.3396 31.3319H31.412H26.229C28.8814 30.3735 30.1008 27.3034 28.8174 24.7829C27.4137 22.0259 23.7746 21.3551 21.4801 23.4302L21.3372 23.5594C20.23 24.5607 18.5444 24.5607 17.4373 23.5594L17.2944 23.4302C14.9999 21.3551 11.3608 22.0259 9.95706 24.7829C8.6737 27.3034 9.89308 30.3735 12.5455 31.3319H7.37547H4.44792C3.59607 31.3319 3.10572 30.3637 3.60983 29.677L4.65111 28.2586C4.9711 27.8227 4.90357 27.2144 4.4958 26.8593L2.87937 25.4517C2.40349 25.0373 2.40349 24.2979 2.87937 23.8835L4.61121 22.3754C4.96813 22.0646 5.0701 21.552 4.85929 21.1283L3.8364 19.0722C3.55533 18.5072 3.83826 17.8242 4.43651 17.6234L6.61364 16.8929C7.06233 16.7423 7.35271 16.3077 7.32011 15.8356L7.1619 13.5446C7.11842 12.9151 7.64121 12.3923 8.27074 12.4358L10.5617 12.594C11.0339 12.6266 11.4685 12.3362 11.619 11.8875L12.3496 9.71037C12.5503 9.11213 13.2334 8.82919 13.7984 9.11027L15.8544 10.1332C16.2781 10.344 16.7908 10.242 17.1016 9.88508L18.6097 8.15324ZM19.4937 31.0863C20.7496 31.0863 21.7677 30.4291 21.7677 29.6184C21.7677 28.8078 20.7496 28.1506 19.4937 28.1506C18.2378 28.1506 17.2197 28.8078 17.2197 29.6184C17.2197 30.4291 18.2378 31.0863 19.4937 31.0863ZM15.3817 26.7983C15.3817 27.5467 14.775 28.1533 14.0267 28.1533C13.2784 28.1533 12.6717 27.5467 12.6717 26.7983C12.6717 26.05 13.2784 25.4433 14.0267 25.4433C14.775 25.4433 15.3817 26.05 15.3817 26.7983ZM24.9631 28.1533C25.7114 28.1533 26.3181 27.5467 26.3181 26.7983C26.3181 26.05 25.7114 25.4433 24.9631 25.4433C24.2147 25.4433 23.6081 26.05 23.6081 26.7983C23.6081 27.5467 24.2147 28.1533 24.9631 28.1533Z" fill="#FE3C9C"/>
+                    </svg>
+                  </div>
+                )
+              }
+            ].map((tech, index) => {
+              return (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: index * 0.1 }}
+                  viewport={{ once: true }}
+                  whileHover={{ y: -8, scale: 1.02 }}
+                  className="group"
+                >
+                  <div className={`${tech.bgColor} p-8 rounded-3xl border border-slate-200/50 hover:border-slate-300/50 shadow-xl hover:shadow-2xl transition-all duration-500 h-full relative overflow-hidden`}>
+                    <div className="space-y-6 relative">
+                      <motion.div 
+                        className="group-hover:scale-110 transition-transform duration-300"
+                        whileHover={{ rotate: 5 }}
+                      >
+                        {tech.logo}
+                      </motion.div>
+                      <div>
+                        <h3 className={`text-xl font-bold ${tech.textColor} mb-3 group-hover:scale-105 transition-transform`}>
+                          {tech.name}
+                        </h3>
+                        <p className="text-slate-600 text-sm leading-relaxed mb-4 font-medium">{tech.description}</p>
+                        <ul className="space-y-2">
+                          {tech.features.map((feature, idx) => (
+                            <li key={idx} className="flex items-center text-xs text-slate-700">
+                              <CheckCircle className={`w-4 h-4 ${tech.textColor} mr-2 flex-shrink-0`} />
+                              <span className="font-medium">{feature}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+              )
+            })}
+          </div>
+
+          {/* Integration Flow */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+            className="bg-white p-8 rounded-3xl border border-slate-200/50 shadow-2xl"
+          >
+            <h3 className="text-2xl font-bold text-slate-800 text-center mb-8">How It All Works Together</h3>
+            <div className="grid md:grid-cols-4 gap-6">
+              {[
+                { step: "1", title: "Upload", desc: "Digital content management", color: "bg-green-100 text-green-600" },
+                { step: "2", title: "Verify", desc: "Yakoa authenticity validation", color: "bg-purple-100 text-purple-600" },
+                { step: "3", title: "Protect", desc: "Story Protocol IP registration", color: "bg-blue-100 text-blue-600" },
+                { step: "4", title: "License", desc: "Cross-chain via DeBridge & Tomo", color: "bg-orange-100 text-orange-600" }
+              ].map((item, index) => (
+                <motion.div
+                  key={index}
+                  className="text-center"
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.2 }}
+                  viewport={{ once: true }}
+                >
+                  <div className={`w-12 h-12 ${item.color} rounded-full flex items-center justify-center font-bold text-lg mx-auto mb-4`}>
+                    {item.step}
+                  </div>
+                  <h4 className="font-bold text-slate-800 mb-2">{item.title}</h4>
+                  <p className="text-sm text-slate-600 font-medium">{item.desc}</p>
+                  {index < 3 && (
+                    <ArrowRight className="w-5 h-5 text-slate-400 mx-auto mt-4 hidden md:block" />
+                  )}
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Features Section */}
+      <section id="features" className="py-24 bg-gradient-to-br from-white via-slate-50/50 to-white relative">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+          <motion.div
+            className="text-center space-y-4 mb-20"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true }}
+          >
+            <h2 className="text-5xl md:text-6xl font-black text-slate-800 mb-6">
+              Everything You Need to{" "}
+              <span className="text-green-600">
+                Succeed
+              </span>
+            </h2>
+            <p className="text-xl text-slate-600 max-w-3xl mx-auto leading-relaxed font-medium">
+              From AI-powered creation to blockchain protection, we provide all the tools you need to build a thriving creative business in the digital age.
+            </p>
+          </motion.div>
+          
+          <div className="grid lg:grid-cols-3 gap-8">
+            {features.map((feature, index) => {
+              const Icon = feature.icon
+              return (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: index * 0.2 }}
+                  viewport={{ once: true }}
+                  whileHover={{ y: -8, scale: 1.02 }}
+                  className="group"
+                >
+                  <div className={`bg-gradient-to-br from-white via-slate-50/30 to-white p-8 rounded-3xl border border-slate-200/50 hover:border-slate-300/50 shadow-xl hover:shadow-2xl ${feature.shadowColor} transition-all duration-500 h-full relative overflow-hidden`}>
+                    {/* Background Pattern */}
+                    <div className="absolute top-0 right-0 w-32 h-32 opacity-5">
+                      <div className={`w-full h-full bg-green-400/30 rounded-full blur-2xl`}></div>
+                    </div>
+                    
+                    <div className="space-y-6 relative">
+                      <motion.div 
+                        className={`w-20 h-20 bg-green-600 rounded-3xl flex items-center justify-center shadow-2xl ${feature.shadowColor} group-hover:scale-110 transition-transform duration-300`}
+                        whileHover={{ rotate: 5 }}
+                      >
+                        <Icon className="w-10 h-10 text-white" />
+                      </motion.div>
+                      <div>
+                        <h3 className="text-2xl font-bold text-slate-800 mb-4 group-hover:text-green-700 transition-colors">
+                          {feature.title}
+                        </h3>
+                        <p className="text-slate-600 leading-relaxed mb-6 font-medium">{feature.description}</p>
+                        <ul className="space-y-3">
+                          {feature.benefits.map((benefit, idx) => (
+                            <motion.li 
+                              key={idx} 
+                              className="flex items-center text-sm text-slate-700"
+                              initial={{ opacity: 0, x: -10 }}
+                              whileInView={{ opacity: 1, x: 0 }}
+                              transition={{ delay: (index * 0.2) + (idx * 0.1) }}
+                            >
+                              <CheckCircle className="w-5 h-5 text-green-500 mr-3 flex-shrink-0" />
+                              <span className="font-medium">{benefit}</span>
+                            </motion.li>
+                          ))}
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+              )
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* Use Cases Section */}
+      <section id="use-cases" className="py-24 bg-green-50/20 relative">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+          <motion.div
+            className="text-center space-y-4 mb-20"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true }}
+          >
+            <h2 className="text-5xl md:text-6xl font-black text-slate-800">
+              Built for{" "}
+              <span className="text-green-600">
+                Every Creator
+              </span>
+            </h2>
+            <p className="text-xl text-slate-600 max-w-3xl mx-auto leading-relaxed font-medium">
+              Whether you're an artist, content creator, business, or developer, CreativeIP adapts to your unique needs and workflow.
+            </p>
+          </motion.div>
+          
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {useCases.map((useCase, index) => {
+              const Icon = useCase.icon
+              return (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: index * 0.1 }}
+                  viewport={{ once: true }}
+                  whileHover={{ y: -8, scale: 1.02 }}
+                  className="group cursor-pointer"
+                >
+                  <div className={`${useCase.bgPattern} p-8 rounded-3xl border border-slate-200/50 hover:border-slate-300/50 shadow-xl hover:shadow-2xl transition-all duration-500 h-full relative overflow-hidden`}>
+                    {/* Hover effect overlay */}
+                    <div className="absolute inset-0 bg-gradient-to-br from-white/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    
+                    <div className="space-y-6 relative">
+                      <motion.div 
+                        className={`w-16 h-16 bg-green-600 rounded-2xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300`}
+                        whileHover={{ rotate: 10 }}
+                      >
+                        <Icon className="w-8 h-8 text-white" />
+                      </motion.div>
+                      <h3 className="text-xl font-bold text-slate-800 group-hover:text-green-700 transition-colors">
+                        {useCase.title}
+                      </h3>
+                      <p className="text-slate-600 text-sm leading-relaxed font-medium">{useCase.description}</p>
+                      <div className="flex items-center text-green-600 font-semibold text-sm group-hover:text-green-700 transition-colors">
+                        <span>Learn more</span>
+                        <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-2 transition-transform duration-300" />
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+              )
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* Demo Section */}
+      <section id="demo" className="py-24 bg-white relative">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+          <motion.div
+            className="text-center space-y-4 mb-20"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true }}
+          >
+            <h2 className="text-5xl md:text-6xl font-black text-slate-800">
+              See{" "}
+              <span className="text-green-600">
+                CreativeIP
+              </span>{" "}
+              in Action
+            </h2>
+            <p className="text-xl text-slate-600 max-w-3xl mx-auto leading-relaxed font-medium">
+              Experience the power of AI-driven content creation with blockchain-secured intellectual property protection.
+            </p>
+          </motion.div>
+          
+          <div className="grid md:grid-cols-2 gap-16 items-center">
+            <motion.div
+              initial={{ opacity: 0, x: -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8 }}
+              viewport={{ once: true }}
+              className="space-y-8"
+            >
+              <div className="space-y-6">
+                <h3 className="text-3xl font-bold text-slate-800">Built with Modern Tech</h3>
+                <div className="space-y-4">
+                  {[
+                    "Story Protocol - IP Licensing Infrastructure",
+                    "DeBridge - Cross-Chain Asset Bridge",
+                    "Yakoa - Content Verification Engine", 
+                    "Tomo Network - High-Performance Blockchain"
+                  ].map((tech, index) => (
+                    <motion.div 
+                      key={index}
+                      className="flex items-center space-x-4 p-4 bg-green-50 rounded-xl border border-green-200/50"
+                      initial={{ opacity: 0, x: -20 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      transition={{ delay: index * 0.1 }}
+                      whileHover={{ scale: 1.02 }}
+                    >
+                      <CheckCircle className="w-6 h-6 text-green-500 flex-shrink-0" />
+                      <span className="text-slate-700 font-semibold">{tech}</span>
+                    </motion.div>
+                  ))}
+                </div>
+              </div>
+            </motion.div>
+            
+            <motion.div
+              initial={{ opacity: 0, x: 30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              viewport={{ once: true }}
+              whileHover={{ scale: 1.02 }}
+              className="relative"
+            >
+              <div className="bg-green-50 p-10 rounded-3xl border-2 border-green-200/50 shadow-2xl shadow-green-500/20 relative overflow-hidden">
+                {/* Background decoration */}
+                <div className="absolute top-0 right-0 w-32 h-32 bg-green-200/30 rounded-full blur-2xl"></div>
+                <div className="absolute bottom-0 left-0 w-24 h-24 bg-green-300/30 rounded-full blur-2xl"></div>
+                
+                <div className="text-center space-y-6 relative">
+                  <motion.div 
+                    className="w-20 h-20 bg-green-600 rounded-3xl flex items-center justify-center mx-auto shadow-2xl shadow-green-500/30"
+                    whileHover={{ rotate: 10, scale: 1.1 }}
+                    transition={{ type: "spring", stiffness: 400, damping: 10 }}
+                  >
+                    <Play className="w-10 h-10 text-white" />
+                  </motion.div>
+                  <h4 className="text-2xl font-bold text-slate-800">Interactive Demo</h4>
+                  <p className="text-slate-600 font-medium leading-relaxed">
+                    Explore the platform's core features including AI model training, asset protection, and marketplace functionality.
+                  </p>
+                  <motion.div
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.98 }}
+                  >
+                    <Button 
+                      onClick={isConnected ? handleLaunchPlatform : handleConnectWallet}
+                      className="bg-green-600 hover:bg-green-700 text-white w-full shadow-xl hover:shadow-2xl hover:shadow-green-500/30 transition-all duration-300 py-4 text-lg font-bold"
+                    >
+                      <MousePointer className="mr-3 w-5 h-5" />
+                      Try Demo Now
+                      <ArrowRight className="ml-3 w-5 h-5" />
+                    </Button>
+                  </motion.div>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      {/*<section className="py-24 bg-green-600 relative overflow-hidden">
+        {/* Background Pattern */}
+        {/*<div className="absolute inset-0 opacity-10">
+          <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-white rounded-full blur-3xl"></div>
+          <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-white rounded-full blur-3xl"></div>
+        </div>
+        
+        <div className="max-w-5xl mx-auto px-6 lg:px-8 text-center text-white relative">
+          <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8 }}
+        viewport={{ once: true }}
+        className="space-y-10"
+          >
+        <h2 className="text-5xl md:text-6xl font-black leading-tight">
+          Ready to Revolutionize<br/>
+          <span className="text-yellow-300">Digital IP Management?</span>
+        </h2>
+        <p className="text-xl text-green-100 max-w-3xl mx-auto leading-relaxed font-medium">
+          Join the first platform combining Story Protocol, DeBridge, Yakoa, and Tomo Network 
+          for seamless cross-chain IP licensing and content protection.
+        </p>
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
+          <motion.div
+            whileHover={{ scale: 1.05, y: -2 }}
+            whileTap={{ scale: 0.98 }}
+          >
+            <Button 
+          onClick={isConnected ? handleLaunchPlatform : handleConnectWallet}
+          size="lg"
+          className="bg-white text-green-600 hover:bg-slate-50 px-10 py-5 text-xl rounded-2xl shadow-2xl font-bold transition-all duration-300"
+            >
+          {isConnected ? (
+            <>
+              <Rocket className="mr-3 w-6 h-6" />
+              Launch Platform
+              <ArrowRight className="ml-3 w-6 h-6" />
+            </>
+          ) : (
+            <>
+              <Wallet className="mr-3 w-6 h-6" />
+              Get Started Now
+              <ArrowRight className="ml-3 w-6 h-6" />
+            </>
+          )}
+            </Button>
+          </motion.div>
+          <p className="text-green-100 text-sm font-semibold bg-white/10 px-4 py-2 rounded-full">
+            Hackathon Demo • Open Source
+          </p>
+        </div>
+          </motion.div>
+        </div>
+      </section>*/}
+
+{/* Footer */}
+     <footer className="bg-slate-900 text-white py-20 relative overflow-hidden">
+        {/* Simple Background Elements */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <div className="absolute top-1/2 left-1/4 w-32 h-32 bg-green-500/5 rounded-full blur-2xl"></div>
+          <div className="absolute bottom-1/2 right-1/3 w-24 h-24 bg-green-500/5 rounded-full blur-2xl"></div>
+        </div>
+
+        <div className="max-w-7xl mx-auto px-6 relative">
+          <div className="text-center">
+            {/* Big Text */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+              viewport={{ once: true }}
+            >
+              <h2 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black leading-tight mb-8">
+                <span className="text-green-400">CREATE</span>
+                <span className="text-slate-500 mx-2 md:mx-3">•</span>
+                <span className="text-green-400">PROTECT</span>
+                <span className="text-slate-500 mx-2 md:mx-3">•</span>
+                <span className="text-green-400">MONETIZE</span>
+              </h2>
+              <p className="text-xl md:text-2xl lg:text-3xl text-slate-300 font-light">
+                The future of digital creativity
+              </p>
+            </motion.div>
+          </div>
+        </div>
+      </footer>
+    </div>
+  )
+}
