@@ -1,39 +1,18 @@
 # CreativeIP - Comprehensive Architecture Documentation
 
 <div align="center">
-<img src="./public/hero.gif" alt="CreativeIP Demo" width="600px">
-</div>
-
-<div align="center">
-<img src="./public/tech.png" alt="Technology Stack" width="700px">
+<img src="./public/hero.gif" alt="CreativeIP Demo" width="750px" style="max-width: 100%; height: auto;">
 </div>
 
 ## 🎯 Overview
 
 The Story IP Platform is a decentralized intellectual property management system that combines multiple blockchain technologies to provide seamless IP registration, verification, and cross-chain licensing. The platform integrates **Story Protocol**, **Yakoa verification**, **deBridge cross-chain payments**, and **Tomo wallet** to create a comprehensive IP ecosystem.
 
-## 🏗️ Architecture Overview
-
-```
-┌─────────────────────────────────────────────────────────────────────────────────┐
-│                              Story IP Platform                                  │
-├─────────────────────────────────────────────────────────────────────────────────┤
-│                                                                                 │
-│  ┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐           │
-│  │   Frontend UI   │    │   Backend API   │    │  Smart Contracts │           │
-│  │  (Next.js/React)│◄──►│  (Express/Node) │◄──►│  (Story Protocol)│           │
-│  └─────────────────┘    └─────────────────┘    └─────────────────┘           │
-│           │                       │                       │                   │
-│           │                       │                       │                   │
-│  ┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐           │
-│  │  Tomo Wallet    │    │    Yakoa API    │    │   deBridge DLN  │           │
-│  │  (Social Login) │    │ (Verification)  │    │ (Cross-chain)   │           │
-│  └─────────────────┘    └─────────────────┘    └─────────────────┘           │
-│                                                                                 │
-└─────────────────────────────────────────────────────────────────────────────────┘
-```
-
 ## 🔧 Core Services Integration
+
+<div align="center">
+<img src="./public/tech.png" alt="Core Technologies - Story Protocol, DeBridge, Yakoa, Tomo Network" width="800px">
+</div>
 
 ### 1. **Story Protocol** - IP Registration & Licensing
 - **Purpose**: On-chain IP registration and NFT minting
