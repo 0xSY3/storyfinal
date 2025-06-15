@@ -1,12 +1,12 @@
 # CreativeIP - Comprehensive Architecture Documentation
 
 <div align="center">
-<img src="./public/hero.gif" alt="CreativeIP Demo" width="60%">
-<br><br>
-<img src="./public/tech.png" alt="Technology Stack" width="80%">
+<img src="./public/hero.gif" alt="CreativeIP Demo" width="600px">
 </div>
 
----
+<div align="center">
+<img src="./public/tech.png" alt="Technology Stack" width="700px">
+</div>
 
 ## 🎯 Overview
 
