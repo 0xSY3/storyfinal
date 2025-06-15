@@ -1,17 +1,12 @@
 # CreativeIP - Comprehensive Architecture Documentation
 
-## 🎬 Hero Section
-
 <div align="center">
-  <video width="80%" controls>
-    <source src="./public/hero.mp4" type="video/mp4">
-    Your browser does not support the video tag.
-  </video>
+<img src="./public/hero.gif" alt="CreativeIP Demo" width="60%">
+<br><br>
+<img src="./public/tech.png" alt="Technology Stack" width="80%">
 </div>
 
-<div align="center">
-  <img src="./public/tech.png" alt="Technology Stack" width="60%">
-</div>
+---
 
 ## 🎯 Overview
 
