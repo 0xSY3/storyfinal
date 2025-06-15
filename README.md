@@ -1,5 +1,18 @@
 # CreativeIP - Comprehensive Architecture Documentation
 
+## 🎬 Hero Section
+
+<div align="center">
+  <video width="80%" controls>
+    <source src="./public/hero.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+</div>
+
+<div align="center">
+  <img src="./public/tech.png" alt="Technology Stack" width="60%">
+</div>
+
 ## 🎯 Overview
 
 The Story IP Platform is a decentralized intellectual property management system that combines multiple blockchain technologies to provide seamless IP registration, verification, and cross-chain licensing. The platform integrates **Story Protocol**, **Yakoa verification**, **deBridge cross-chain payments**, and **Tomo wallet** to create a comprehensive IP ecosystem.
