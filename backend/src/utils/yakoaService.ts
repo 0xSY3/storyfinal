@@ -1,4 +1,4 @@
-import { yakoaClient, YakoaTokenRegistration, YakoaMediaItem, getStoryChain } from '../config/yakoa';
+import { yakoaClient, YakoaTokenRegistration, YakoaMediaItem, YakoaTrustReason, getStoryChain } from '../config/yakoa';
 import { AssetType } from '../types/assetTypes';
 import { firebaseDB } from './firebase';
 
@@ -102,7 +102,7 @@ export class YakoaVerificationService {
         creator_id: this.validateEthereumAddress(assetData.creatorAddress),
         metadata: {
           name: assetData.fileName,
-          description: assetData.metadata.description || `${assetData.assetType} asset from Story IP Marketplace`,
+          description: assetData.metadata.description || `${assetData.assetType} asset from CreativeIP`,
           asset_type: assetData.assetType,
           category: assetData.metadata.category,
           tags: assetData.metadata.tags
@@ -110,20 +110,11 @@ export class YakoaVerificationService {
         media: [{
           media_id: assetData.assetId,
           url: assetData.ipfsUrl,
-          // For IPFS URLs, hash is optional but helps with verification
-          hash: assetData.fileBuffer ? yakoaClient.generateContentHash(assetData.fileBuffer) : undefined,
-          trust_reason: {
-            type: 'trusted_platform' as const,
-            trusted_platform: {
-              platform_name: 'Story IP Marketplace',
-              platform_url: 'https://story.ip.marketplace'
-            },
-            reason: 'Uploaded to verified Story IP Marketplace'
-          }
+          ...(assetData.fileBuffer && { hash: yakoaClient.generateContentHash(assetData.fileBuffer) })
         }],
         // Mark as trusted platform content
         authorizations: [{
-          brand_name: 'Story IP Marketplace',
+          brand_name: 'CreativeIP',
           data: {
             type: 'false_positive' as const,
             reason: 'Verified platform upload - pre-authorized content'
@@ -132,6 +123,7 @@ export class YakoaVerificationService {
       };
 
       console.log('📤 Sending registration to Yakoa API...');
+      console.log('🔍 Debug - Media object:', JSON.stringify(yakoaTokenData.media[0], null, 2));
       
       // Register with Yakoa API
       const yakoaResponse = await yakoaClient.registerToken(yakoaTokenData);
@@ -255,7 +247,7 @@ export class YakoaVerificationService {
 
       // Create false positive authorization
       const authorization = {
-        brand_name: brandName || 'Platform Verification',
+        brand_name: brandName || 'CreativeIP',
         data: {
           type: 'false_positive' as const,
           reason,
@@ -296,10 +288,21 @@ export class YakoaVerificationService {
       }
 
       // Update trust reason for main media
-      await yakoaClient.updateMediaTrust(storedData.tokenId, assetId, {
-        type: trustReason,
-        reason
-      });
+      const trustReasonData: YakoaTrustReason = trustReason === 'trusted_platform' 
+        ? {
+            type: 'trusted_platform',
+            trusted_platform: {
+              platform_name: 'CreativeIP',
+              platform_url: 'http://localhost:3000'
+            },
+            reason
+          }
+        : {
+            type: 'no_licenses',
+            reason
+          };
+
+      await yakoaClient.updateMediaTrust(storedData.tokenId, assetId, trustReasonData);
 
       return true;
 
